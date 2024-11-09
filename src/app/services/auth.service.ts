@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse } from '../model/auth.model';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,16 @@ export class AuthService {
     })
   };
 
+  private document = inject(DOCUMENT);
+  private window = this.document.defaultView;
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { username, password },this.httpOptions)
       .pipe(
         tap((response: AuthResponse) => {
-          localStorage.setItem('token', response.token);
+          this.window?.localStorage.setItem('token', response.token);
+          this.window?.localStorage.setItem('username', response.username);
         })
       );
   }
@@ -35,10 +39,10 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    this.window?.localStorage.removeItem('token');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.window?.localStorage.getItem('token');
   }
 }

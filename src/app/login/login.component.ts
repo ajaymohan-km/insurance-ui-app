@@ -47,9 +47,14 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       error: error => {
-        this.error = error.error.message || 'Login failed';
+        if (error.status === 403) {
+          this.error = 'Invalid username or password';
+        } else {
+          this.error = 'Unable to connect to the server';
+        }
         this.loading = false;
       }
     });
+    
   }
 }
