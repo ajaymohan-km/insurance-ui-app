@@ -1,0 +1,49 @@
+<div class="plans-container">
+    <header class="plans-header">
+      <h1>Insurance Plans</h1>
+      <div class="filters">
+        <select class="filter-select">
+          <option value="">All Categories</option>
+          <option value="health">Health</option>
+          <option value="life">Life</option>
+          <option value="vehicle">Vehicle</option>
+        </select>
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search plans...">
+        </div>
+      </div>
+    </header>
+  
+    <div class="plans-grid">
+      <div class="plan-card" *ngFor="let plan of plans">
+        <div class="plan-header">
+          <div class="plan-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="plan-type">{{plan.type}}</div>
+          <div class="plan-badge" *ngIf="plan.isPopular">Popular</div>
+        </div>
+        
+        <h3 class="plan-name">{{plan.name}}</h3>
+        <p class="plan-description">{{plan.description}}</p>
+        
+        <div class="plan-features">
+          <div class="feature" *ngFor="let feature of plan.features">
+            <i class="fas fa-check"></i>
+            <span>{{feature}}</span>
+          </div>
+        </div>
+  
+        <div class="plan-pricing">
+          <div class="price">
+            <span class="currency">$</span>
+            <span class="amount">{{plan.monthlyPrice}}</span>
+            <span class="period">/month</span>
+          </div>
+          <button class="select-plan">Select Plan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

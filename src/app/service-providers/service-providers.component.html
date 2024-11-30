@@ -1,0 +1,73 @@
+<div class="providers-container">
+    <header class="providers-header">
+      <h1>Select Service Provider</h1>
+      <div class="filters-section">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm"
+            (input)="filterProviders()"
+            placeholder="Search providers..."
+          >
+        </div>
+        
+        <div class="filter-group">
+          <select [(ngModel)]="selectedSpecialty" (change)="filterProviders()">
+            <option value="">All Specialties</option>
+            <option value="general">General Practice</option>
+            <option value="dental">Dental Care</option>
+            <option value="vision">Vision Care</option>
+            <option value="specialist">Specialist</option>
+          </select>
+  
+          <select [(ngModel)]="selectedLocation" (change)="filterProviders()">
+            <option value="">All Locations</option>
+            <option value="north">North Region</option>
+            <option value="south">South Region</option>
+            <option value="east">East Region</option>
+            <option value="west">West Region</option>
+          </select>
+        </div>
+      </div>
+    </header>
+  
+    <div class="providers-grid">
+      <div class="provider-card" *ngFor="let provider of filteredProviders">
+        <div class="provider-image">
+          <img [src]="provider.imageUrl" [alt]="provider.name">
+          <div class="availability-badge" 
+               [class.available]="provider.availability.includes('today')">
+            {{ provider.availability.includes('today') ? 'Available Today' : 'Next Available: Tomorrow' }}
+          </div>
+        </div>
+  
+        <div class="provider-info">
+          <h3>{{provider.name}}</h3>
+          <p class="specialty">{{provider.specialty}}</p>
+          
+          <div class="rating">
+            <div class="stars">
+              <i class="fas fa-star" *ngFor="let star of getRatingStars(provider.rating)"></i>
+              <i class="far fa-star" *ngFor="let star of getRatingStars(5 - provider.rating)"></i>
+            </div>
+            <span class="reviews">({{provider.reviews}} reviews)</span>
+          </div>
+  
+          <div class="details">
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{provider.location}}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-briefcase"></i>
+              <span>{{provider.experience}} years experience</span>
+            </div>
+          </div>
+  
+          <button class="select-provider">Select Provider</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

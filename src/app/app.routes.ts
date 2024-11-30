@@ -21,6 +21,17 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'plans',
+        loadComponent: () => import('./insurance-plans/insurance-plans.component').then(m => m.InsurancePlansComponent),
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'providers',
+        loadComponent: () => import('./service-providers/service-providers.component')
+            .then(m => m.ServiceProvidersComponent),
+        canActivate: [AuthGuard]
+    },
+    {
         path: '**',
         redirectTo: 'login'
     }
