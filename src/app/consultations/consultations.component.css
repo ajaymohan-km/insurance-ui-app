@@ -1,0 +1,92 @@
+.consultations-container {
+    padding: 2rem;
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: #f5f6fa;
+  }
+  
+  .consultations-header {
+    margin-bottom: 2rem;
+  }
+  
+  .consultations-header h1 {
+    color: #333;
+  }
+  
+  .consultation-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .consultation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .status-badge.completed {
+    background-color: #e8f5e9;
+    color: #4caf50;
+  }
+  
+  .status-badge.scheduled {
+    background-color: #e3f2fd;
+    color: #2196f3;
+  }
+  .status-badge.applied {
+    background-color: #e3f2fd;
+    color: #020096;
+  }
+  
+  .date {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .consultation-details {
+    color: #333;
+  }
+  
+  .notes {
+    margin-bottom: 1rem;
+  }
+  
+  .meta-info {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.2rem;
+    color: #4361ee;
+  }
+  .apply-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .apply-button:hover {
+    background-color: #45a049;
+  }
+  

@@ -1,0 +1,41 @@
+<div class="policies-container">
+    <h2>My Policies</h2>
+    <div class="loading-spinner" *ngIf="loading">Loading...</div>
+    
+    <div class="policies-list" *ngIf="!loading">
+        <div class="policy-item" *ngFor="let policy of policies">
+            <div class="policy-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <div class="policy-details">
+                <h3>Policy ID: {{policy.id}}</h3>
+                <p>Status: {{policy.status}}</p>
+                <p>Start Date: {{policy.startDate | date}}</p>
+                <p>End Date: {{policy.endDate | date}}</p>
+            </div>
+            <span class="policy-status" [ngClass]="policy.status.toLowerCase()">
+                {{policy.status}}
+            </span>
+            <button class="claim-button" (click)="openClaimModal(policy)">Apply for Claim</button>
+        </div>
+    </div>
+</div>
+
+<!-- Claim Modal -->
+<div class="modal" *ngIf="showClaimModal">
+    <div class="modal-content">
+        <h2>Submit Claim</h2>
+        <div class="form-group">
+            <label>Description:</label>
+            <textarea [(ngModel)]="claimData.description" placeholder="Enter claim description"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Amount:</label>
+            <input type="number" [(ngModel)]="claimData.amount" placeholder="Enter claim amount">
+        </div>
+        <div class="modal-actions">
+            <button class="submit-button" (click)="submitClaim()">Submit Claim</button>
+            <button class="cancel-button" (click)="closeClaimModal()">Cancel</button>
+        </div>
+    </div>
+</div>

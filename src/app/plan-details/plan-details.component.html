@@ -1,0 +1,37 @@
+<div class="plan-details-container">
+    <div *ngIf="loading" class="loading-spinner">
+      Loading...
+    </div>
+  
+    <div *ngIf="!loading && planDetails" class="plan-card">
+      <div class="plan-header">
+        <h1>{{planDetails.name}}</h1>
+        <span class="category-badge">{{planDetails.category}}</span>
+      </div>
+  
+      <div class="plan-description">
+        <p>{{planDetails.description}}</p>
+        <div class="premium">
+          <span class="label">Premium:</span>
+          <span class="amount">${{planDetails.premium}}</span>
+        </div>
+      </div>
+  
+      <div class="features-section">
+        <div class="coverage">
+          <h2>Coverage</h2>
+          <ul>
+            <li *ngFor="let item of planDetails.coverage">{{item}}</li>
+          </ul>
+        </div>
+  
+        <div class="benefits">
+          <h2>Benefits</h2>
+          <ul>
+            <li *ngFor="let benefit of planDetails.benefits">{{benefit}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  

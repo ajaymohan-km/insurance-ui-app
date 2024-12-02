@@ -1,0 +1,34 @@
+<div class="consultations-container">
+    <div class="consultations-header">
+      <h1>My Consultations</h1>
+    </div>
+  
+    <div *ngIf="loading" class="loading-spinner">
+      Loading consultations...
+    </div>
+  
+    <div class="consultations-list" *ngIf="!loading">
+      <div class="consultation-card" *ngFor="let consultation of consultations">
+        <div class="consultation-header">
+          <span class="status-badge" [ngClass]="consultation.status.toLowerCase()">
+            {{consultation.status}}
+          </span>
+          <span class="date">{{consultation.scheduledTime | date:'medium'}}</span>
+        </div>
+  
+        <div class="consultation-details">
+          <p class="notes">{{consultation.notes}}</p>
+          <div class="meta-info">
+            <span>Created: {{consultation.createdAt | date:'medium'}}</span>
+          </div>
+        </div>
+        <button 
+          *ngIf="consultation.status === 'COMPLETED'"
+          class="apply-button"
+          (click)="onApply(consultation)">
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>
+  

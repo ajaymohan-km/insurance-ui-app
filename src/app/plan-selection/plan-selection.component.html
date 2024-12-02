@@ -1,0 +1,35 @@
+<div class="selection-container">
+    <div *ngIf="loading" class="loading-spinner">
+      Loading...
+    </div>
+  
+    <div *ngIf="!loading && planDetails" class="selection-content">
+      <div class="plan-summary">
+        <h1>{{planDetails.name}}</h1>
+        <span class="category">{{planDetails.category}}</span>
+        <p class="description">{{planDetails.description}}</p>
+        <div class="premium">
+          <span>Monthly Premium:</span>
+          <span class="amount">${{planDetails.premium}}</span>
+        </div>
+      </div>
+  
+      <div class="provider-selection">
+        <h2>Select Service Provider</h2>
+        <select [(ngModel)]="selectedProvider" class="provider-dropdown">
+          <option value="">Choose a provider</option>
+          <option *ngFor="let provider of serviceProviders" [value]="provider.id">
+            {{provider.fullName}}
+          </option>
+        </select>
+  
+        <button 
+          *ngIf="selectedProvider" 
+          (click)="onSubmit()" 
+          class="submit-button">
+          Submit Application
+        </button>
+      </div>
+    </div>
+  </div>
+  

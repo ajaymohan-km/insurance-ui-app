@@ -1,0 +1,90 @@
+.plan-details-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .plan-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .plan-header h1 {
+    font-size: 2rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .category-badge {
+    background: #4361ee;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .plan-description {
+    margin-bottom: 2rem;
+  }
+  
+  .premium {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .premium .label {
+    color: #666;
+  }
+  
+  .premium .amount {
+    font-weight: bold;
+    color: #4361ee;
+    margin-left: 0.5rem;
+  }
+  
+  .features-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .coverage h2, .benefits h2 {
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  li:before {
+    content: "✓";
+    color: #4caf50;
+    margin-right: 0.5rem;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    font-size: 1.2rem;
+    color: #4361ee;
+  }
+  

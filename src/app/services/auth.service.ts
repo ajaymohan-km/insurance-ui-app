@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse } from '../model/auth.model';
-import { DOCUMENT } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -15,34 +15,41 @@ export class AuthService {
     })
   };
 
-  private document = inject(DOCUMENT);
-  private window = this.document.defaultView;
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  private getStorage(): Storage | null {
+    return isPlatformBrowser(this.platformId) ? window.localStorage : null;
+  }
 
   login(username: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { username, password },this.httpOptions)
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { username, password }, this.httpOptions)
       .pipe(
         tap((response: AuthResponse) => {
-          this.window?.localStorage.setItem('token', response.token);
-          this.window?.localStorage.setItem('username', response.username);
+          const storage = this.getStorage();
+          if (storage) {
+            storage.setItem('token', response.token);
+            storage.setItem('username', response.username);
+          }
         })
       );
   }
 
   register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData, this.httpOptions)
-      .pipe(
-        tap(response => {
-          console.log('Registration response:', response);
-        })
-      );
+    return this.http.post(`${this.apiUrl}/register`, userData, this.httpOptions);
   }
 
   logout(): void {
-    this.window?.localStorage.removeItem('token');
+    const storage = this.getStorage();
+    if (storage) {
+      storage.removeItem('token');
+    }
   }
 
   isLoggedIn(): boolean {
-    return !!this.window?.localStorage.getItem('token');
+    const storage = this.getStorage();
+    return !!storage?.getItem('token');
   }
 }

@@ -22,6 +22,10 @@ export class RegisterComponent {
   registerForm: FormGroup;
   loading = false;
   error = '';
+  userTypes = [
+    { value: 'CUSTOMER', label: 'Customer' },
+    { value: 'SERVICE_PROVIDER', label: 'Service Provider' }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,

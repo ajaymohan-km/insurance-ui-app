@@ -1,125 +1,98 @@
 <div class="dashboard-container">
-    <aside class="sidebar">
-      <div class="brand">
-        <span class="logo">🛡️</span>
-        <h2>Insurance Hub</h2>
-      </div>
-      <nav class="nav-menu">
-        <a class="nav-item active">
-          <i class="fas fa-home"></i>
-          <span>Dashboard</span>
-        </a>
-        <a class="nav-item">
-          <i class="fas fa-file-contract"></i>
-          <span>Policies</span>
-        </a>
-        <a class="nav-item">
-          <i class="fas fa-clipboard-list"></i>
-          <span>Claims</span>
-        </a>
-        <!-- <a class="nav-item">
-          <i class="fas fa-calendar-check"></i>
-          <span>Appointments</span>
-        </a> -->
-      </nav>
-    </aside>
   
-    <main class="main-content">
-      <header class="top-bar">
-        <div class="search-bar">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search...">
-        </div>
-        <div class="user-menu">
-          <!-- <div class="notifications">
-            <i class="fas fa-bell"></i>
-            <span class="badge">3</span>
-          </div> -->
-          <div class="profile">
+
+  <main class="main-content">
+    <header class="top-bar">
+      <h1>Welcome back, {{username}}!</h1>
+      <div class="user-menu">
+        <div class="profile">
+          <div class="profile-image">
             <img src="assets/avatar.png" alt="Profile">
-            <span>John Doe</span>
           </div>
-        </div>
-      </header>
-  
-      <div class="dashboard-content">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon active">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <div class="stat-details">
-              <h3>Active Policies</h3>
-              <p class="stat-value">{{dashboardData.totalActivePolicies}}</p>
-              <!-- <span class="trend positive">↑ 12% from last month</span> -->
-            </div>
-          </div>
-  
-          <div class="stat-card">
-            <div class="stat-icon pending">
-              <i class="fas fa-clock"></i>
-            </div>
-            <div class="stat-details">
-              <h3>Pending Claims</h3>
-              <p class="stat-value">{{dashboardData.totalPendingClaims}}</p>
-              <!-- <span class="trend negative">↓ 3% from last month</span> -->
-            </div>
-          </div>
-  
-          <div class="stat-card">
-            <div class="stat-icon revenue">
-              <i class="fas fa-dollar-sign"></i>
-            </div>
-            <div class="stat-details">
-              <h3>Total Revenue</h3>
-              <p class="stat-value">${{dashboardData.totalRevenue}}</p>
-              <!-- <span class="trend positive">↑ 8% from last month</span> -->
-            </div>
-          </div>
-        </div>
-  
-        <div class="dashboard-grid">
-          <div class="transactions-card">
-            <div class="card-header">
-              <h3>Recent Transactions</h3>
-              <button class="view-all">View All</button>
-            </div>
-            <div class="transactions-list">
-              <div class="transaction-item" *ngFor="let transaction of dashboardData.recentTransactions">
-                <div class="transaction-icon">
-                  <i class="fas fa-exchange-alt"></i>
-                </div>
-                <div class="transaction-details">
-                  <h4>{{transaction.type}}</h4>
-                  <span>{{transaction.date | date}}</span>
-                </div>
-                <div class="transaction-amount">
-                  ${{transaction.amount}}
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <!-- <div class="upcoming-card">
-            <div class="card-header">
-              <h3>Upcoming Renewals</h3>
-              <button class="view-all">View All</button>
-            </div>
-            <div class="renewals-list">
-              <div class="renewal-item">
-                <div class="renewal-icon">
-                  <i class="fas fa-calendar"></i>
-                </div>
-                <div class="renewal-details">
-                  <h4>Auto Insurance</h4>
-                  <span>Expires in 15 days</span>
-                </div>
-                <button class="renew-button">Renew Now</button>
-              </div>
-            </div>
-          </div> -->
+          <span class="profile-name">{{username}}</span>
         </div>
       </div>
-    </main>
-  </div>
-  
+    </header>
+
+    <div class="dashboard-content" *ngIf="!loading">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon active">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="stat-details">
+            <h3>Active Policies</h3>
+            <p class="stat-value">{{getActivePoliciesCount()}}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon pending">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-details">
+            <h3>Pending Claims</h3>
+            <p class="stat-value">{{getPendingClaimsCount()}}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon applications">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="stat-details">
+            <h3>Pending Applications</h3>
+            <p class="stat-value">{{getPendingApplicationsCount()}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="policies-card">
+          <div class="card-header">
+            <h3>Your Active Policies</h3>
+          </div>
+          <div class="policies-list">
+            <div class="policy-item" *ngFor="let policy of dashboardData.policies" (click)="viewPlanDetails(policy.planId)">
+              <div class="policy-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="policy-details">
+                <h4>Policy ID: {{policy.id}}</h4>
+                <span>Valid until: {{policy.endDate | date}}</span>
+              </div>
+              <div class="policy-status" [ngClass]="policy.status.toLowerCase()">
+                {{policy.status}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="applications-card">
+          <div class="card-header">
+            <h3>Recent Applications</h3>
+          </div>
+          <div class="applications-list">
+            <div class="application-item" *ngFor="let app of dashboardData.applications" (click)="viewPlanDetails(app.planId)">
+              <div class="application-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="application-details">
+                <h4>Application ID: {{app.id}}</h4>
+                <span>Submitted: {{app.submissionDate | date}}</span>
+              </div>
+              <div class="application-status" [ngClass]="app.status.toLowerCase()">
+                {{app.status}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading-spinner" *ngIf="loading">
+      <i class="fas fa-spinner fa-spin"></i>
+      Loading dashboard data...
+    </div>
+  </main>
+</div>

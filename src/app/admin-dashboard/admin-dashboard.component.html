@@ -1,0 +1,105 @@
+<div class="admin-dashboard">
+    <div class="dashboard-header">
+        <div class="header-content">
+            <div class="welcome-section">
+                <h1>Admin Dashboard</h1>
+                <p class="subtitle">Welcome, {{adminName}}</p>
+            </div>
+            <button class="logout-button" (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon applications">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{applications.length}}</h3>
+                    <p>Pending Applications</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon providers">
+                    <i class="fas fa-hospital-user"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{providers.length}}</h3>
+                    <p>Service Providers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <section class="dashboard-card applications-section">
+            <div class="card-header">
+                <h2><i class="fas fa-file-alt"></i> Pending Applications</h2>
+            </div>
+            <div class="card-content">
+                <div class="application-item" *ngFor="let app of applications">
+                    <div class="item-header">
+                        <span class="application-id">Application #{{app.id}}</span>
+                        <span class="status-badge" [ngClass]="app.status.toLowerCase()">
+                            {{app.status}}
+                        </span>
+                    </div>
+                    <div class="item-details">
+                        <div class="detail">
+                            <i class="fas fa-user"></i>
+                            Customer ID: {{app.customerId}}
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-calendar"></i>
+                            Submitted: {{app.submissionDate | date:'medium'}}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="approve-button" (click)="approveApplication(app.id)">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                        <button class="reject-button" (click)="rejectApplication(app.id)">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section class="dashboard-card providers-section">
+            <div class="card-header">
+                <h2><i class="fas fa-hospital-user"></i> Service Providers</h2>
+            </div>
+            <div class="card-content">
+                <div class="provider-item" *ngFor="let provider of providers">
+                    <div class="item-header">
+                        <span class="provider-name">{{provider.fullName}}</span>
+                        <div class="toggle-switch">
+                            <label class="switch">
+                                <input type="checkbox" 
+                                       [checked]="provider.enabled"
+                                       (change)="toggleProviderStatus(provider)">
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="status-text">{{provider.enabled ? 'Active' : 'Inactive'}}</span>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <div class="detail">
+                            <i class="fas fa-envelope"></i>
+                            {{provider.email}}
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-user"></i>
+                            {{provider.username}}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</div>

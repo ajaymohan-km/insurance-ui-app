@@ -1,0 +1,21 @@
+<div class="claims-container">
+    <h2>My Claims</h2>
+    <div class="loading-spinner" *ngIf="loading">Loading...</div>
+    
+    <div class="claims-list" *ngIf="!loading">
+        <div class="claim-item" *ngFor="let claim of claims">
+            <div class="claim-icon">
+                <i class="fas fa-file-medical"></i>
+            </div>
+            <div class="claim-details">
+                <h3>Claim ID: {{claim.id}}</h3>
+                <p>Policy ID: {{claim.policyId}}</p>
+                <p>Amount: ${{claim.amount}}</p>
+                <p>Description: {{claim.description}}</p>
+            </div>
+            <span class="claim-status" [ngClass]="claim.status.toLowerCase()">
+                {{claim.status}}
+            </span>
+        </div>
+    </div>
+</div>

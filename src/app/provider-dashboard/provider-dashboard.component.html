@@ -1,0 +1,101 @@
+<div class="provider-dashboard">
+    <div class="dashboard-header">
+        <div class="welcome-section">
+            <h1>Welcome, {{providerName}}</h1>
+            <p class="subtitle">Here's your activity overview</p>
+        </div>
+        <button class="logout-button" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </button>
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon consultations">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{consultations.length}}</h3>
+                    <p>Scheduled Consultations</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon claims">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{claims.length}}</h3>
+                    <p>Pending Claims</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <section class="dashboard-card consultations-section">
+            <div class="card-header">
+                <h2><i class="fas fa-calendar-check"></i> Scheduled Consultations</h2>
+            </div>
+            <div class="card-content">
+                <div class="consultation-item" *ngFor="let consultation of consultations">
+                    <div class="item-header">
+                        <span class="customer-id">Customer #{{consultation.customerId}}</span>
+                        <span class="status-badge" [ngClass]="consultation.status.toLowerCase()">
+                            {{consultation.status}}
+                        </span>
+                    </div>
+                    <div class="item-details">
+                        <div class="detail">
+                            <i class="fas fa-clock"></i>
+                            {{consultation.scheduledTime | date:'medium'}}
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-sticky-note"></i>
+                            {{consultation.notes}}
+                        </div>
+                    </div>
+                    <div class="item-actions" *ngIf="consultation.status === 'SCHEDULED'">
+                        <button class="complete-button" (click)="completeConsultation(consultation.id)">
+                            <i class="fas fa-check"></i> Complete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-card claims-section">
+            <div class="card-header">
+                <h2><i class="fas fa-file-medical"></i> Pending Claims</h2>
+            </div>
+            <div class="card-content">
+                <div class="claim-item" *ngFor="let claim of claims">
+                    <div class="item-header">
+                        <span class="claim-id">Claim #{{claim.id}}</span>
+                        <span class="amount">${{claim.amount}}</span>
+                    </div>
+                    <div class="item-details">
+                        <div class="detail">
+                            <i class="fas fa-user"></i>
+                            Customer #{{claim.customerId}}
+                        </div>
+                        <div class="detail">
+                            <i class="fas fa-comment"></i>
+                            {{claim.description}}
+                        </div>
+                        <span class="status-badge" [ngClass]="claim.status.toLowerCase()">
+                            {{claim.status}}
+                        </span>
+                    </div>
+                    <div class="item-actions" *ngIf="claim.status === 'SUBMITTED'">
+                        <button class="approve-button" (click)="approveClaim(claim.id)">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                        <button class="reject-button" (click)="rejectClaim(claim.id)">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+</div>

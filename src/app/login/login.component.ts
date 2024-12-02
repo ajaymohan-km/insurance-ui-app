@@ -35,26 +35,29 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      return;
+        return;
     }
 
     this.loading = true;
     this.authService.login(
-      this.loginForm.get('username')?.value,
-      this.loginForm.get('password')?.value
+        this.loginForm.get('username')?.value,
+        this.loginForm.get('password')?.value
     ).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
-      },
-      error: error => {
-        if (error.status === 403) {
-          this.error = 'Invalid username or password';
-        } else {
-          this.error = 'Unable to connect to the server';
+        next: (response) => {
+            if (response.role === 'ADMIN') {
+                this.router.navigate(['/admin-dashboard']);
+            } else if (response.role === 'SERVICE_PROVIDER') {
+                this.router.navigate(['/provider-dashboard']);
+            } else {
+                this.router.navigate(['/dashboard']);
+            }
+        },
+        error: error => {
+            this.error = 'Invalid credentials';
+            this.loading = false;
         }
-        this.loading = false;
-      }
     });
-    
-  }
+}
+
+
 }

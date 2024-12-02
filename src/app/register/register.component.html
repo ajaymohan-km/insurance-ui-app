@@ -57,6 +57,20 @@
             class="form-control"
           />
         </div>
+
+        <div class="form-group">
+          <label for="role">User Type</label>
+          <select
+            id="role"
+            formControlName="role"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': registerForm.get('role')?.touched && registerForm.get('role')?.invalid }"
+          >
+            <option *ngFor="let type of userTypes" [value]="type.value">
+              {{type.label}}
+            </option>
+          </select>
+        </div>
   
         <div *ngIf="error" class="alert alert-danger">
           {{ error }}
